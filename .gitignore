@@ -1,0 +1,2 @@
+# Ignorar la carpeta de compilaciond de CMake
+/build/
