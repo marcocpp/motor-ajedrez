@@ -6,11 +6,10 @@
 
 class Caballo : public Ficha {
 public:
-    Caballo(Color color);
+    Caballo(Color color, char icono);
     bool movimientoValido(); //TODO Hay q redefinirla
 
-    virtual ~Caballo() = default;
-
+    virtual ~Caballo() noexcept override = default;
 };
 
 #endif // CABALLO_HPP

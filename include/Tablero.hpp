@@ -12,6 +12,8 @@ public:
 
     Tablero();
 
+    void dibujarTablero();
+
 private:
     Casilla m_casillas[TAM][TAM];
     std::vector<Ficha*> m_fichasTablero;

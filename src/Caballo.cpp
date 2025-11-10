@@ -1,6 +1,6 @@
 #include "Caballo.hpp"
 
-Caballo::Caballo(Color color) : Ficha(color) {
+Caballo::Caballo(Color color, char icono) : Ficha(color, icono) {
 
 }
 

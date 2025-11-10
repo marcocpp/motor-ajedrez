@@ -6,10 +6,10 @@
 
 class Torre : public Ficha {
 public:
-    Torre(Color color);
+    Torre(Color color, char icono);
     bool movimientoValido(); //TODO Hay q redefinirla
 
-    virtual ~Torre() = default;
+    virtual ~Torre() noexcept override = default;
 
 };
 

@@ -6,11 +6,10 @@
 
 class Alfil : public Ficha {
 public:
-    Alfil(Color color);
+    Alfil(Color color, char icono);
     bool movimientoValido(); //TODO Hay q redefinirla
 
-    virtual ~Alfil() = default;
-
+    virtual ~Alfil() noexcept override = default;
 };
 
 #endif // ALFIL_HPP

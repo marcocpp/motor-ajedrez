@@ -6,10 +6,10 @@
 
 class Peon : public Ficha {
 public:
-    Peon(Color color);
+    Peon(Color color, char icono);
     bool movimientoValido(); //TODO Hay q redefinirla
 
-    virtual ~Peon() = default;
+    virtual ~Peon() noexcept override = default;
 
 };
 

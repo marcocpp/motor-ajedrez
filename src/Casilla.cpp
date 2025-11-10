@@ -7,3 +7,7 @@ Casilla::Casilla() : m_fichaActual(nullptr) {
 void Casilla::setFicha(Ficha* ficha) {
     m_fichaActual = ficha;
 }
+
+Ficha* Casilla::getFicha() {
+    return m_fichaActual;
+}

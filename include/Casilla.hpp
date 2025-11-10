@@ -8,6 +8,7 @@ public:
     Casilla();
 
     void setFicha(Ficha* ficha);
+    Ficha* getFicha();
 
 private:
     Ficha* m_fichaActual = nullptr; // Si ficha = nullptr, la casilla está vacia

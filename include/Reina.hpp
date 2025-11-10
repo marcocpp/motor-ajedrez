@@ -6,10 +6,10 @@
 
 class Reina : public Ficha {
 public:
-    Reina(Color color);
+    Reina(Color color, char icono);
     bool movimientoValido(); //TODO Hay q redefinirla
 
-    virtual ~Reina() = default;
+    virtual ~Reina() noexcept override = default;
 
 };
 
