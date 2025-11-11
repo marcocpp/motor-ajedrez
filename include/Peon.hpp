@@ -3,8 +3,7 @@
 
 #include "Ficha.hpp"
 
-class Peon : public Ficha
-{
+class Peon : public Ficha {
 public:
     Peon(Color color, char icono);
     bool movimientoValido(); // TODO Hay q redefinirla

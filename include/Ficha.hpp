@@ -1,14 +1,12 @@
 #ifndef FICHA_HPP
 #define FICHA_HPP
 
-enum class Color
-{
+enum class Color {
     BLANCO,
     NEGRO
 };
 
-class Ficha
-{
+class Ficha {
 public:
     Ficha(Color color, char icono);
     virtual ~Ficha() noexcept = default;
