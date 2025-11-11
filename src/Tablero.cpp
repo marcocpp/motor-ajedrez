@@ -100,3 +100,11 @@ void Tablero::dibujarTablero() {
         std::cout << char(c) << "   ";
     }
 }
+
+void Tablero::moverFicha(Coordenada origen, Coordenada destino) {
+    // Guarda la ficha q va a mover: Primeo la quita de la casilla de origen con quitarFicha() y luego la asigna a fichaMovida
+    std::unique_ptr<Ficha> fichaMovida = m_casillas[origen.fila][origen.col].quitarFicha();
+
+    // Asigna al destino la ficha movida
+    m_casillas[destino.fila][destino.col].setFicha(std::move(fichaMovida));
+}

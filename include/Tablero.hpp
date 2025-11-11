@@ -15,7 +15,7 @@ public:
 
     void dibujarTablero();
     void quitarFicha(std::unique_ptr<Ficha> ficha);
-    void setFicha(std::unique_ptr<Ficha> ficha, Coordenada destino); // añadir como parametro tambien las coordenadas a donde lo quiero poner 
+    void moverFicha(Coordenada origen, Coordenada destino); // Mover ficha una vez comprobado en movimiento 
 
 private:
     Casilla m_casillas[TAM][TAM];

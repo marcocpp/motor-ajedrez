@@ -10,15 +10,14 @@
 class Jugador {
 public:
 
-    Jugador(Color color);
+    Jugador(Color color, std::string nombre);
     ~Jugador() = default;
 
     Color getColor() const;
     std::string getNombre() const;
 
-    void solicitarMovimiento(); // Solicita el movimiento y la clase Partida ejecuta ese movimiento si es valido, si no lo es vuelve a solicitar
-
-
+    // Solicita el movimiento y la clase Partida ejecuta ese movimiento si es valido, si no lo es vuelve a solicitar
+    Coordenada solicitarCoordenada(std::string texto);
 private:
     Color m_color;
     std::string m_nombre;

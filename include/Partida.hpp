@@ -7,16 +7,21 @@
 
 class Partida {
 public:
-    Partida();
+    Partida(std::string nombre_j1, std::string nombre_j2);
     ~Partida() = default;
 
-    void iniciarPartida();
-    void gestionarTurno();
-    void ejecutarMovimiento();
 
+    void iniciarPartida();
+    bool validarMovimiento(Coordenada origen, Coordenada destino);
 
 
 private:
+    Jugador m_jugador1;
+    Jugador m_jugador2;
+    Jugador* m_jugadorActual; // Para saber a quien le toca
+    Tablero m_tablero;
+
+    bool m_juegoEnCurso = false;
 
 };
 
