@@ -2,9 +2,9 @@
 
 
 void Casilla::setFicha(std::unique_ptr<Ficha> ficha) {
-    m_fichaActual = std::move(ficha);
+    m_ficha = std::move(ficha);
 }
 
-Ficha* Casilla::getFicha() {
-    return m_fichaActual.get();
+Ficha* Casilla::getFicha() const {
+    return m_ficha.get();
 }

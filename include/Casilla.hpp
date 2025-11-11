@@ -9,10 +9,11 @@ public:
     Casilla() = default;
 
     void setFicha(std::unique_ptr<Ficha> ficha);
-    Ficha* getFicha();
+    Ficha* getFicha() const;
+    std::unique_ptr<Ficha> quitarFicha();
 
 private:
-    std::unique_ptr<Ficha> m_fichaActual; // Si ficha = nullptr, la casilla está vacia
+    std::unique_ptr<Ficha> m_ficha; // Si ficha = nullptr, la casilla está vacia
 };
 
 #endif // CASILLA_HPP
