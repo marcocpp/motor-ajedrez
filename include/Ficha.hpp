@@ -1,10 +1,7 @@
 #ifndef FICHA_HPP
 #define FICHA_HPP
 
-enum class Color {
-    BLANCO,
-    NEGRO
-};
+#include "TiposJuego.hpp"
 
 class Ficha {
 public:

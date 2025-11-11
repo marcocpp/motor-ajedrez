@@ -14,6 +14,8 @@ public:
     ~Tablero() = default;
 
     void dibujarTablero();
+    void quitarFicha(std::unique_ptr<Ficha> ficha);
+    void setFicha(std::unique_ptr<Ficha> ficha, Coordenada destino); // añadir como parametro tambien las coordenadas a donde lo quiero poner 
 
 private:
     Casilla m_casillas[TAM][TAM];
