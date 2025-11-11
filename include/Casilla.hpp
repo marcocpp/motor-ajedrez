@@ -1,17 +1,18 @@
 #ifndef CASILLA_HPP
 #define CASILLA_HPP
 
-class Ficha;
+#include <memory>
+#include "Ficha.hpp"
 
 class Casilla {
 public:
-    Casilla();
+    Casilla() = default;
 
-    void setFicha(Ficha* ficha);
+    void setFicha(std::unique_ptr<Ficha> ficha);
     Ficha* getFicha();
 
 private:
-    Ficha* m_fichaActual = nullptr; // Si ficha = nullptr, la casilla está vacia
+    std::unique_ptr<Ficha> m_fichaActual; // Si ficha = nullptr, la casilla está vacia
 };
 
 #endif // CASILLA_HPP

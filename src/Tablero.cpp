@@ -14,68 +14,60 @@ Tablero::Tablero() {
 
     // Set torres desde arriba a abajo
     for (int i = 0; i < 8; i++) {
-        Ficha* nuevaTorre = new Torre(Color::NEGRO, 'R');
-        m_casillas[7][i].setFicha(nuevaTorre);
-        m_fichasTablero.push_back(nuevaTorre);
+        auto nuevaTorre = std::make_unique<Torre>(Color::NEGRO, 'R');
+        m_casillas[7][i].setFicha(std::move(nuevaTorre));
 
-        Ficha* nuevaTorre2 = new Torre(Color::BLANCO, 'R');
-        m_casillas[0][i].setFicha(nuevaTorre2);
-        m_fichasTablero.push_back(nuevaTorre2);
+        auto nuevaTorre2 = std::make_unique<Torre>(Color::BLANCO, 'R');
+        m_casillas[0][i].setFicha(std::move(nuevaTorre2));
         i += 6;
     }
 
     // Set Caballos desde arriba a abajo
     for (int i = 1; i < 8; i++) {
-        Ficha* nuevoCaballo = new Caballo(Color::NEGRO, 'N');
-        m_casillas[7][i].setFicha(nuevoCaballo);
-        m_fichasTablero.push_back(nuevoCaballo);
+        auto nuevoCaballo = std::make_unique<Caballo>(Color::NEGRO, 'N');
+        m_casillas[7][i].setFicha(std::move(nuevoCaballo));
 
-        Ficha* nuevoCaballo2 = new Caballo(Color::BLANCO, 'N');
-        m_casillas[0][i].setFicha(nuevoCaballo2);
-        m_fichasTablero.push_back(nuevoCaballo2);
+        auto nuevoCaballo2 = std::make_unique<Caballo>(Color::BLANCO, 'N');
+        m_casillas[0][i].setFicha(std::move(nuevoCaballo2));
         i += 4;
     }
 
     // Set Alfil desde arriba abajo
     for (int i = 2; i < 8; i++) {
-        Ficha* nuevoAlfil = new Alfil(Color::NEGRO, 'B');
-        m_casillas[7][i].setFicha(nuevoAlfil);
-        m_fichasTablero.push_back(nuevoAlfil);
+        auto nuevoAlfil = std::make_unique<Alfil>(Color::NEGRO, 'B');
+        m_casillas[7][i].setFicha(std::move(nuevoAlfil));
 
-        Ficha* nuevoAlfil2 = new Alfil(Color::BLANCO, 'B');
-        m_casillas[0][i].setFicha(nuevoAlfil2);
-        m_fichasTablero.push_back(nuevoAlfil2);
+        auto nuevoAlfil2 = std::make_unique<Alfil>(Color::BLANCO, 'B');
+        m_casillas[0][i].setFicha(std::move(nuevoAlfil2));
         i += 2;
     }
 
     // Set Reina
-    Ficha* nuevoReina = new Reina(Color::NEGRO, 'Q');
-    m_casillas[7][3].setFicha(nuevoReina);
-    m_fichasTablero.push_back(nuevoReina);
+    auto nuevoReina = std::make_unique<Reina>(Color::NEGRO, 'Q');
+    m_casillas[7][3].setFicha(std::move(nuevoReina));
 
-    Ficha* nuevoReina2 = new Reina(Color::BLANCO, 'Q');
-    m_casillas[0][3].setFicha(nuevoReina2);
-    m_fichasTablero.push_back(nuevoReina2);
+    auto nuevoReina2 = std::make_unique<Reina>(Color::BLANCO, 'Q');
+    m_casillas[0][3].setFicha(std::move(nuevoReina2));
 
     // Set Rey
-    Ficha* nuevoRey = new Rey(Color::NEGRO, 'K');
-    m_casillas[7][4].setFicha(nuevoRey);
-    m_fichasTablero.push_back(nuevoRey);
+    auto nuevoRey = std::make_unique<Rey>(Color::NEGRO, 'K');
+    m_casillas[7][4].setFicha(std::move(nuevoRey));
 
-    Ficha* nuevoRey2 = new Rey(Color::BLANCO, 'K');
-    m_casillas[0][4].setFicha(nuevoRey2);
-    m_fichasTablero.push_back(nuevoRey2);
+    auto nuevoRey2 = std::make_unique<Rey>(Color::BLANCO, 'K');
+    m_casillas[0][4].setFicha(std::move(nuevoRey2));
 
     // Set peon desde arriba a abajo
     for (int i = 0; i < TAM; i++) {
-        Ficha* nuevoPeon = new Peon(Color::NEGRO, 'P');
-        m_casillas[6][i].setFicha(nuevoPeon);
-        m_fichasTablero.push_back(nuevoPeon); // Guarda las fichas para borrarlas despues
+        auto nuevoPeon = std::make_unique<Peon>(Color::NEGRO, 'P');
+        m_casillas[6][i].setFicha(std::move(nuevoPeon));
 
-        Ficha* nuevoPeon2 = new Peon(Color::BLANCO, 'P');
-        m_casillas[1][i].setFicha(nuevoPeon2);
-        m_fichasTablero.push_back(nuevoPeon2);
+        auto nuevoPeon2 = std::make_unique<Peon>(Color::BLANCO, 'P');
+        m_casillas[1][i].setFicha(std::move(nuevoPeon2));
     }
+}
+
+Tablero::~Tablero() {
+
 }
 
 void Tablero::dibujarTablero() {
@@ -89,7 +81,7 @@ void Tablero::dibujarTablero() {
         std::cout << "  +---+---+---+---+---+---+---+---+" << std::endl;
         std::cout << i + 1 << " |";
         for (int j = 0; j < TAM; j++) {
-            if (m_casillas[i][j].getFicha() != nullptr) {
+            if (m_casillas[i][j].getFicha()) {
                 if (m_casillas[i][j].getFicha()->getColor() == Color::NEGRO) {
                     std::cout << " " << AZUL << m_casillas[i][j].getFicha()->getIcono() << RESET << " |";
                 }

@@ -11,12 +11,12 @@ public:
     static constexpr int TAM = 8;
 
     Tablero();
+    ~Tablero();
 
     void dibujarTablero();
 
 private:
     Casilla m_casillas[TAM][TAM];
-    std::vector<Ficha*> m_fichasTablero;
 };
 
 #endif // TABLERO_HPP
