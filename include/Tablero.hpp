@@ -11,7 +11,7 @@ public:
     static constexpr int TAM = 8;
 
     Tablero();
-    ~Tablero();
+    ~Tablero() = default;
 
     void dibujarTablero();
 
