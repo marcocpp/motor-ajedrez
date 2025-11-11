@@ -66,9 +66,6 @@ Tablero::Tablero() {
     }
 }
 
-Tablero::~Tablero() {
-
-}
 
 void Tablero::dibujarTablero() {
 

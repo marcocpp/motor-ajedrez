@@ -13,7 +13,7 @@ public:
     std::unique_ptr<Ficha> quitarFicha();
 
 private:
-    std::unique_ptr<Ficha> m_ficha; // Si ficha = nullptr, la casilla está vacia
+    std::unique_ptr<Ficha> m_ficha;
 };
 
 #endif // CASILLA_HPP
