@@ -71,8 +71,7 @@ Tablero::Tablero()
     }
 }
 
-void Tablero::dibujarTablero()
-{
+void Tablero::dibujarTablero() {
 
     const std::string AZUL = "\033[34m";
     const std::string RESET = "\033[0m";
@@ -113,8 +112,7 @@ void Tablero::dibujarTablero()
     }
 }
 
-void Tablero::moverFicha(Coordenada origen, Coordenada destino)
-{
+void Tablero::moverFicha(Coordenada origen, Coordenada destino) {
     // Guarda la ficha q va a mover: Primeo la quita de la casilla de origen con quitarFicha() y luego la asigna a fichaMovida
     std::unique_ptr<Ficha> fichaMovida = m_casillas[origen.fila][origen.col].quitarFicha();
 
@@ -122,7 +120,6 @@ void Tablero::moverFicha(Coordenada origen, Coordenada destino)
     m_casillas[destino.fila][destino.col].setFicha(std::move(fichaMovida));
 }
 
-Ficha *Tablero::getFichaCasilla(Coordenada casilla) const
-{
+Ficha* Tablero::getFichaCasilla(Coordenada casilla) const {
     return m_casillas[casilla.fila][casilla.col].getFicha();
 }
