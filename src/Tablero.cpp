@@ -10,10 +10,12 @@
 #include <iostream>
 #include <cstdlib>
 
-Tablero::Tablero() {
+Tablero::Tablero()
+{
 
     // Set torres desde arriba a abajo
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++)
+    {
         auto nuevaTorre = std::make_unique<Torre>(Color::NEGRO, 'R');
         m_casillas[7][i].setFicha(std::move(nuevaTorre));
 
@@ -23,7 +25,8 @@ Tablero::Tablero() {
     }
 
     // Set Caballos desde arriba a abajo
-    for (int i = 1; i < 8; i++) {
+    for (int i = 1; i < 8; i++)
+    {
         auto nuevoCaballo = std::make_unique<Caballo>(Color::NEGRO, 'N');
         m_casillas[7][i].setFicha(std::move(nuevoCaballo));
 
@@ -33,7 +36,8 @@ Tablero::Tablero() {
     }
 
     // Set Alfil desde arriba abajo
-    for (int i = 2; i < 8; i++) {
+    for (int i = 2; i < 8; i++)
+    {
         auto nuevoAlfil = std::make_unique<Alfil>(Color::NEGRO, 'B');
         m_casillas[7][i].setFicha(std::move(nuevoAlfil));
 
@@ -57,7 +61,8 @@ Tablero::Tablero() {
     m_casillas[0][4].setFicha(std::move(nuevoRey2));
 
     // Set peon desde arriba a abajo
-    for (int i = 0; i < TAM; i++) {
+    for (int i = 0; i < TAM; i++)
+    {
         auto nuevoPeon = std::make_unique<Peon>(Color::NEGRO, 'P');
         m_casillas[6][i].setFicha(std::move(nuevoPeon));
 
@@ -66,27 +71,33 @@ Tablero::Tablero() {
     }
 }
 
-
-void Tablero::dibujarTablero() {
+void Tablero::dibujarTablero()
+{
 
     const std::string AZUL = "\033[34m";
     const std::string RESET = "\033[0m";
 
     std::cout << std::endl;
 
-    for (int i = TAM - 1; i >= 0; i--) {
+    for (int i = TAM - 1; i >= 0; i--)
+    {
         std::cout << "  +---+---+---+---+---+---+---+---+" << std::endl;
         std::cout << i + 1 << " |";
-        for (int j = 0; j < TAM; j++) {
-            if (m_casillas[i][j].getFicha()) {
-                if (m_casillas[i][j].getFicha()->getColor() == Color::NEGRO) {
+        for (int j = 0; j < TAM; j++)
+        {
+            if (m_casillas[i][j].getFicha())
+            {
+                if (m_casillas[i][j].getFicha()->getColor() == Color::NEGRO)
+                {
                     std::cout << " " << AZUL << m_casillas[i][j].getFicha()->getIcono() << RESET << " |";
                 }
-                else {
+                else
+                {
                     std::cout << " " << m_casillas[i][j].getFicha()->getIcono() << " |";
                 }
             }
-            else {
+            else
+            {
                 std::cout << "   |";
             }
         }
@@ -96,15 +107,22 @@ void Tablero::dibujarTablero() {
     std::cout << "  +---+---+---+---+---+---+---+---+" << std::endl;
 
     std::cout << "    ";
-    for (int c = 97; c < 97 + TAM; c++) {
+    for (int c = 97; c < 97 + TAM; c++)
+    {
         std::cout << char(c) << "   ";
     }
 }
 
-void Tablero::moverFicha(Coordenada origen, Coordenada destino) {
+void Tablero::moverFicha(Coordenada origen, Coordenada destino)
+{
     // Guarda la ficha q va a mover: Primeo la quita de la casilla de origen con quitarFicha() y luego la asigna a fichaMovida
     std::unique_ptr<Ficha> fichaMovida = m_casillas[origen.fila][origen.col].quitarFicha();
 
     // Asigna al destino la ficha movida
     m_casillas[destino.fila][destino.col].setFicha(std::move(fichaMovida));
+}
+
+Ficha *Tablero::getFichaCasilla(Coordenada casilla) const
+{
+    return m_casillas[casilla.fila][casilla.col].getFicha();
 }

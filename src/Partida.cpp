@@ -1,17 +1,47 @@
 #include "Partida.hpp"
 
-
-Partida::Partida(std::string nombre_j1, std::string nombre_j2) : m_tablero(), m_jugador1(Color::BLANCO, nombre_j1), m_jugador2(Color::NEGRO, nombre_j2) {
+Partida::Partida(std::string nombre_j1, std::string nombre_j2) : m_tablero(), m_jugador1(Color::BLANCO, nombre_j1), m_jugador2(Color::NEGRO, nombre_j2)
+{
     m_jugadorActual = &m_jugador1; // Empieza el jugador 1
 }
 
-bool Partida::validarMovimiento(Coordenada origen, Coordenada destino) {
+bool Partida::validarMovimiento(Coordenada origen, Coordenada destino)
+{
+    Ficha* ficha_org = m_tablero.getFichaCasilla(origen);
+    Ficha* ficha_dest = m_tablero.getFichaCasilla(destino);
+
     // Validar si en origen hay una ficha
-    // Si hay una ficha, identificar cual es para ver q movimiento puede hacer
-    // Verificar destino para ver si ese tipo de ficha puede moverse a ese sitio
+    if (ficha_org != nullptr) {
+        // Validar turno (que no intente mover una ficha q no es tuya. que el blanco no mueva una negra)
+        if (ficha_org->getColor() == m_jugadorActual->getColor()) {
+            // Si hay una ficha, identificar cual es para ver q movimiento puede hacer y verificar si esa ficha puede hacer ese mov
+            if (ficha_org->movimientoValido(origen, destino)) {
+                // Validar autocaptura (que el usuario no capture una ficha propia)
+                // Validar si su movimiento ya valido, se está comiendo una ficha propia, o bien se esta comiend
+                if (ficha_dest != nullptr) { // Se va a comer una ficha enemiga
+                    if (ficha_dest->getColor() != ficha_org->getColor()) { // Son distintos
+                        return true;
+                    }
+                    else {
+                        return false; // Autocaptura !!
+                    }
+                }
+                return true; // Movimiento de ficha valido
+            }
+            else {
+                return false; // Movimiento de ficha invalido
+            }
+        }
+        else {
+            return false; // Esta intentando mover una ficha q no es suya
+        }
+    }
+    else {
+        return false; // No hay ficha en esa casilla
+    }
+
     // Validar si es jaque (No puedes hacer ningún movimiento que deje a tu propio rey en jaque)
-    // Validar turno (que no intente mover una ficha q no es tuya. que el blanco no mueva una negra)
-    // Validar autocaptura (que el usuario no capture una ficha propia)
+
     return true;
 }
 
@@ -31,16 +61,20 @@ void Partida::iniciarPartida() {
         Coordenada destino = m_jugadorActual->solicitarCoordenada("introduce la casilla de DESTINO (ej: e4): ");
 
         // Validamos el movimiento
-        if (validarMovimiento(origen, destino)) {
+        if (validarMovimiento(origen, destino))
+        {
             m_tablero.moverFicha(origen, destino);
 
             // Cambia de jugador
             m_jugadorActual = (m_jugadorActual == &m_jugador1) ? &m_jugador2 : &m_jugador1;
         }
-        else {
+        else
+        {
             std::cout << "¡Movimiento inválido! Inténtalo de nuevo." << std::endl;
         }
 
         m_juegoEnCurso = false; // Quitar, aqui la condicion seria tablas, jaque-mate, o rendicion
+
+        m_tablero.dibujarTablero();
     }
 }

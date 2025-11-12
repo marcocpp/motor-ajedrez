@@ -6,7 +6,8 @@
 
 class Ficha;
 
-class Tablero {
+class Tablero
+{
 public:
     static constexpr int TAM = 8;
 
@@ -15,7 +16,8 @@ public:
 
     void dibujarTablero();
     void quitarFicha(std::unique_ptr<Ficha> ficha);
-    void moverFicha(Coordenada origen, Coordenada destino); // Mover ficha una vez comprobado en movimiento 
+    void moverFicha(Coordenada origen, Coordenada destino); // Mover ficha una vez comprobado en movimiento
+    Ficha *getFichaCasilla(Coordenada casilla) const;
 
 private:
     Casilla m_casillas[TAM][TAM];

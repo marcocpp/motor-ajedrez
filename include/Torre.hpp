@@ -7,7 +7,7 @@
 class Torre : public Ficha {
 public:
     Torre(Color color, char icono);
-    bool movimientoValido(); //TODO Hay q redefinirla
+    bool movimientoValido(Coordenada origen, Coordenada destino); //TODO Hay q redefinirla
 
     virtual ~Torre() noexcept override = default;
 

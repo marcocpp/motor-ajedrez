@@ -5,6 +5,6 @@ Torre::Torre(Color color, char icono) : Ficha(color, icono) {
 }
 
 
-bool Torre::movimientoValido() {
+bool Torre::movimientoValido(Coordenada origen, Coordenada destino) {
     return false;
 }

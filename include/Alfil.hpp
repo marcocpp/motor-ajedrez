@@ -7,7 +7,7 @@
 class Alfil : public Ficha {
 public:
     Alfil(Color color, char icono);
-    bool movimientoValido(); //TODO Hay q redefinirla
+    bool movimientoValido(Coordenada origen, Coordenada destino); //TODO Hay q redefinirla
 
     virtual ~Alfil() noexcept override = default;
 };
