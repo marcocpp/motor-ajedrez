@@ -9,7 +9,7 @@ public:
     virtual ~Ficha() noexcept = default;
 
     Color getColor() const;
-    virtual bool movimientoValido(Coordenada origen, Coordenada destino) = 0; // TODO Hay q poner los atributos
+    virtual bool movimientoValido(Coordenada origen, Coordenada destino, bool esCaptura) = 0; // TODO Hay q poner los atributos
 
     char getIcono() const;
 

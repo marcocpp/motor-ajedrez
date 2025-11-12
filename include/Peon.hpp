@@ -6,7 +6,7 @@
 class Peon : public Ficha {
 public:
     Peon(Color color, char icono);
-    bool movimientoValido(Coordenada origen, Coordenada destino); // TODO Hay q redefinirla
+    bool movimientoValido(Coordenada origen, Coordenada destino, bool esCaptura); // TODO Hay q redefinirla
 
     virtual ~Peon() noexcept override = default;
 };

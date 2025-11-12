@@ -123,3 +123,50 @@ void Tablero::moverFicha(Coordenada origen, Coordenada destino) {
 Ficha* Tablero::getFichaCasilla(Coordenada casilla) const {
     return m_casillas[casilla.fila][casilla.col].getFicha();
 }
+
+// Mira casilla por casilla si el camino esta despejado, no hay ninguna ficha q lo bloquee
+bool Tablero::caminoDespejado(Coordenada origen, Coordenada destino) {
+    int filaActual = origen.fila;
+    int colActual = origen.col;
+    int pasoFila = destino.fila - origen.fila; // pasoFila = +1 (bajando), -1 (subiendo), 0 (no se mueve en fila)
+    int pasoCol = destino.col - origen.col; // pasoCol = +1 (derecha), -1 (izquierda), 0 (no se mueve en columna)
+
+    if (pasoFila >= 1) {
+        pasoFila = 1;
+    }
+    else if (pasoFila <= -1) {
+        pasoFila = -1;
+    }
+    else {
+        pasoFila = 0;
+    }
+
+    if (pasoCol >= 1) {
+        pasoCol = 1;
+    }
+    else if (pasoCol <= -1) {
+        pasoCol = -1;
+    }
+    else {
+        pasoCol = 0;
+    }
+
+    filaActual += pasoFila;
+    colActual += pasoCol;
+
+    while (filaActual != destino.fila || colActual != destino.col) {
+        Ficha* nuevaFicha;
+
+        nuevaFicha = m_casillas[filaActual][colActual].getFicha();
+
+        if (nuevaFicha != nullptr) {
+            return false; // Hay una ficha en la trayectoria, no se puede ejecutar el movimiento
+        }
+
+        filaActual += pasoFila;
+        colActual += pasoCol;
+    }
+
+    return true;
+
+}

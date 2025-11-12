@@ -2,6 +2,6 @@
 
 Alfil::Alfil(Color color, char icono) : Ficha(color, icono) {}
 
-bool Alfil::movimientoValido(Coordenada origen, Coordenada destino) {
+bool Alfil::movimientoValido(Coordenada origen, Coordenada destino, bool esCaptura) {
     return false;
 }

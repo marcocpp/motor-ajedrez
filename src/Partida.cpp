@@ -7,42 +7,42 @@ Partida::Partida(std::string nombre_j1, std::string nombre_j2) : m_tablero(), m_
 
 bool Partida::validarMovimiento(Coordenada origen, Coordenada destino)
 {
+    bool esCaptura = false;
     Ficha* ficha_org = m_tablero.getFichaCasilla(origen);
     Ficha* ficha_dest = m_tablero.getFichaCasilla(destino);
 
     // Validar si en origen hay una ficha
-    if (ficha_org != nullptr) {
-        // Validar turno (que no intente mover una ficha q no es tuya. que el blanco no mueva una negra)
-        if (ficha_org->getColor() == m_jugadorActual->getColor()) {
-            // Si hay una ficha, identificar cual es para ver q movimiento puede hacer y verificar si esa ficha puede hacer ese mov
-            if (ficha_org->movimientoValido(origen, destino)) {
-                // Validar autocaptura (que el usuario no capture una ficha propia)
-                // Validar si su movimiento ya valido, se está comiendo una ficha propia, o bien se esta comiend
-                if (ficha_dest != nullptr) { // Se va a comer una ficha enemiga
-                    if (ficha_dest->getColor() != ficha_org->getColor()) { // Son distintos
-                        return true;
-                    }
-                    else {
-                        return false; // Autocaptura !!
-                    }
-                }
-                return true; // Movimiento de ficha valido
-            }
-            else {
-                return false; // Movimiento de ficha invalido
-            }
-        }
-        else {
-            return false; // Esta intentando mover una ficha q no es suya
-        }
-    }
-    else {
+    if (ficha_org == nullptr) {
         return false; // No hay ficha en esa casilla
     }
 
-    // Validar si es jaque (No puedes hacer ningún movimiento que deje a tu propio rey en jaque)
+    // Validar turno (que no intente mover una ficha q no es tuya. que el blanco no mueva una negra)
+    if (ficha_org->getColor() != m_jugadorActual->getColor()) {
+        return false; // Esta intentando mover una ficha q no es suya
+    }
 
-    return true;
+    // Validar autocaptura (que el usuario no capture una ficha propia)
+    if (ficha_dest != nullptr) {
+        esCaptura = true; // Se va a comer una ficha
+        if (ficha_dest->getColor() == ficha_org->getColor()) {
+            return false; // Autocaptura!
+        }
+    }
+
+    // Si hay una ficha, identificar cual es para ver q movimiento puede hacer y verificar si esa ficha puede hacer ese mov
+    if (!ficha_org->movimientoValido(origen, destino, esCaptura)) {
+        return false; // Movimiento de ficha invalido
+    }
+
+    // Validar si no hay ninguna ficha propia en la trayectoria q realiza q le impida avanzar
+    if (ficha_org->getIcono() != 'N') { // El caballo si puede saltar fichas
+        if (!m_tablero.caminoDespejado(origen, destino)) {
+            return false; // Hay una ficha en la trayectoria q impide el movimiento
+        }
+    }
+
+    // Validar si es jaque (No puedes hacer ningún movimiento que deje a tu propio rey en jaque)
+    return true; // Movimiento de ficha valido
 }
 
 void Partida::iniciarPartida() {
@@ -70,10 +70,10 @@ void Partida::iniciarPartida() {
         }
         else
         {
-            std::cout << "¡Movimiento inválido! Inténtalo de nuevo." << std::endl;
+            std::cout << "Movimiento invalido! Intentalo de nuevo." << std::endl;
         }
 
-        m_juegoEnCurso = false; // Quitar, aqui la condicion seria tablas, jaque-mate, o rendicion
+        m_juegoEnCurso = true; // Quitar, aqui la condicion seria tablas, jaque-mate, o rendicion
 
         m_tablero.dibujarTablero();
     }

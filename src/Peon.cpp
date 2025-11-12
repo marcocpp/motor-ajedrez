@@ -1,4 +1,5 @@
 #include "Peon.hpp"
+#include <math.h>
 
 Peon::Peon(Color color, char icono) : Ficha(color, icono) {}
 
@@ -7,29 +8,41 @@ Peon::Peon(Color color, char icono) : Ficha(color, icono) {}
 // Se puede mover siempre en diagonal hacia delante si y solo sí, hay una ficha contraria
 // Si hay una ficha justo enfrente, el peon no se puede mover hacia delante
 // No se puede mover hacia atrás
-bool Peon::movimientoValido(Coordenada origen, Coordenada destino) {
+bool Peon::movimientoValido(Coordenada origen, Coordenada destino, bool esCaptura) {
     //  Movimiento para peon BLANCO
     if (this->getColor() == Color::BLANCO) {
         // Si no se ha movido aun y su destino-origen es 1 o 2, es decir se mueve 1 o 2 hacia delante, es valido
         if (origen.fila == 1 && ((destino.fila - origen.fila) == 1 || (destino.fila - origen.fila) == 2)) {
             // Si no se ha movido de columna
             if (origen.col == destino.col) {
-                // TODO Si delante hay otra ficha, no puede seguir hacia delante
+                // Si delante hay otra ficha, no puede seguir hacia delante
+                if (esCaptura) {
+                    return false;
+                }
                 return true;
             }
             else {
-                // TODO Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
+                // Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
+                if (esCaptura && abs(destino.col - origen.col) == 1) {
+                    return true;
+                }
                 return false;
             }
 
         }
-        else if ((destino.fila - origen.fila) == 1) { // Ya se ha movido., solo se puede mover una hacia delante
+        else if ((origen.fila == 1 || origen.fila != 1) && (destino.fila - origen.fila) == 1) { // Ya se ha movido, solo se puede mover una hacia delante u oblicuo
             if (origen.col == destino.col) {
-                // TODO Si delante hay otra ficha, no puede seguir hacia delante
+                // Si delante hay otra ficha, no puede seguir hacia delante
+                if (esCaptura) {
+                    return false;
+                }
                 return true;
             }
             else {
-                // TODO Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
+                // Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
+                if (esCaptura && abs(destino.col - origen.col) == 1) {
+                    return true;
+                }
                 return false;
             }
         }
@@ -41,28 +54,38 @@ bool Peon::movimientoValido(Coordenada origen, Coordenada destino) {
     else { // Movimiento para peon NEGRO
         if (origen.fila == 6 && ((origen.fila - destino.fila) == 1 || (origen.fila - destino.fila) == 2)) {
             if (origen.col == destino.col) {
-                // TODO Si delante hay otra ficha, no puede seguir hacia delante
+                if (esCaptura) {
+                    return false;
+                }
                 return true;
             }
             else {
-                // TODO Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
+                // Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
+                if (esCaptura && abs(destino.col - origen.col) == 1) {
+                    return true;
+                }
                 return false;
             }
-
         }
-        else if ((origen.fila - destino.fila) == 1) {
+        else if ((origen.fila == 6 || origen.fila != 6) && (origen.fila - destino.fila) == 1) {
             if (origen.col == destino.col) {
-                // TODO Si delante hay otra ficha, no puede seguir hacia delante
+                if (esCaptura) {
+                    return false;
+                }
                 return true;
             }
             else {
-                // TODO Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
+                if (esCaptura && abs(destino.col - origen.col) == 1) {
+                    return true;
+                }
                 return false;
             }
         }
         else {
             return false;
-
         }
     }
+
+    // Falta implementar la captura al paso
+
 }

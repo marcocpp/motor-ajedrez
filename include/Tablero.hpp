@@ -17,6 +17,7 @@ public:
     void quitarFicha(std::unique_ptr<Ficha> ficha);
     void moverFicha(Coordenada origen, Coordenada destino); // Mover ficha una vez comprobado en movimiento
     Ficha* getFichaCasilla(Coordenada casilla) const;
+    bool caminoDespejado(Coordenada origen, Coordenada destino);
 
 private:
     Casilla m_casillas[TAM][TAM];
