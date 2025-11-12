@@ -62,6 +62,7 @@ bool Peon::movimientoValido(Coordenada origen, Coordenada destino) {
         }
         else {
             return false;
+
         }
     }
 }
