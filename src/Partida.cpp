@@ -49,9 +49,10 @@ void Partida::iniciarPartida() {
     m_juegoEnCurso = true;
     std::cout << m_jugadorActual->getNombre() << " empezara el turno (Blancas)" << std::endl;
 
-    m_tablero.dibujarTablero();
-
     while (m_juegoEnCurso) {
+
+        m_tablero.dibujarTablero();
+
         std::cout << "\nTurno de: " << m_jugadorActual->getNombre() << std::endl;
 
         // Pedimos el origen
@@ -75,6 +76,16 @@ void Partida::iniciarPartida() {
 
         m_juegoEnCurso = true; // Quitar, aqui la condicion seria tablas, jaque-mate, o rendicion
 
-        m_tablero.dibujarTablero();
+        limpiarPantalla();
     }
+}
+
+void Partida::limpiarPantalla() {
+#ifdef _WIN32
+    // Para Windows
+    system("cls");
+#else
+    // Para Linux y macOS (y otros sistemas tipo UNIX)
+    system("clear");
+#endif
 }
