@@ -1,0 +1,9 @@
+{
+    // En .vscode/settings.json
+
+    "cmake.debugConfig": {
+        "externalConsole": true
+        // Opcionalmente, puedes usar la propiedad 'console' más moderna, 
+        // pero 'externalConsole' funciona específicamente para esta solución de CMake Tools.
+    }
+}
