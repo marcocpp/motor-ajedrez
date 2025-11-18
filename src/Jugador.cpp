@@ -45,6 +45,7 @@ Coordenada Jugador::solicitarCoordenada(std::string texto) {
     int fila = input[1] - '1';
 
 
+
     return Coordenada{ fila, col };
 
 }

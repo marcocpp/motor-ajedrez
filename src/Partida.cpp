@@ -46,6 +46,7 @@ bool Partida::validarMovimiento(Coordenada origen, Coordenada destino)
 }
 
 void Partida::iniciarPartida() {
+    limpiarPantalla();
     m_juegoEnCurso = true;
     std::cout << m_jugadorActual->getNombre() << " empezara el turno (Blancas)" << std::endl;
 
@@ -71,21 +72,14 @@ void Partida::iniciarPartida() {
         }
         else
         {
-            std::cout << "Movimiento invalido! Intentalo de nuevo." << std::endl;
+            std::cout << "Movimiento invalido! Intentalo de nuevo.\nEnter para contiunar..." << std::endl;
+            std::cin.get();
         }
+
+        limpiarPantalla();
 
         m_juegoEnCurso = true; // Quitar, aqui la condicion seria tablas, jaque-mate, o rendicion
 
-        limpiarPantalla();
     }
 }
 
-void Partida::limpiarPantalla() {
-#ifdef _WIN32
-    // Para Windows
-    system("cls");
-#else
-    // Para Linux y macOS (y otros sistemas tipo UNIX)
-    system("clear");
-#endif
-}

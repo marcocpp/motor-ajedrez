@@ -23,8 +23,6 @@ private:
 
     bool m_juegoEnCurso = false;
 
-    void limpiarPantalla();
-
 };
 
 #endif // PARTIDA_HPP
