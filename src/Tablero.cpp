@@ -116,6 +116,10 @@ void Tablero::moverFicha(Coordenada origen, Coordenada destino) {
     // Guarda la ficha q va a mover: Primeo la quita de la casilla de origen con quitarFicha() y luego la asigna a fichaMovida
     std::unique_ptr<Ficha> fichaMovida = m_casillas[origen.fila][origen.col].quitarFicha();
 
+    if (fichaMovida->getMovida() == false) {
+        fichaMovida->setMovida(); // La ficha se ha movido por primera vez
+    }
+
     // Asigna al destino la ficha movida
     m_casillas[destino.fila][destino.col].setFicha(std::move(fichaMovida));
 }
@@ -169,4 +173,32 @@ bool Tablero::caminoDespejado(Coordenada origen, Coordenada destino) {
 
     return true;
 
+}
+
+bool Tablero::enroque(Coordenada origen, Coordenada destino, Ficha* ficha_org) {
+    // TODO Comprobar si el rey pasa por una casilla atacada
+    int fila_torre = (ficha_org->getColor() == Color::BLANCO) ? 0 : 7;
+    int col_torre_izq = 0;
+    int col_torre_der = 7;
+    Coordenada torre_orig;
+    Coordenada torre_dest;
+
+    torre_orig.fila = fila_torre;
+    torre_dest.fila = fila_torre;
+
+    // La torre de la izquierda no se ha movido
+    if (!m_casillas[fila_torre][col_torre_izq].getFicha()->getMovida() && origen.col - destino.col > 1) {
+        torre_orig.col = col_torre_izq;
+        torre_dest.col = col_torre_izq + 3;
+        moverFicha(torre_orig, torre_dest);
+        return true;
+    }
+    // La torre de la derecha no se ha movido
+    else if (!m_casillas[fila_torre][col_torre_der].getFicha()->getMovida() && origen.col - destino.col < 1) {
+        torre_orig.col = col_torre_der;
+        torre_dest.col = col_torre_der - 2;
+        moverFicha(torre_orig, torre_dest);
+        return true;
+    }
+    return false;
 }

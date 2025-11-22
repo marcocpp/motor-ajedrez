@@ -9,3 +9,11 @@ Color Ficha::getColor() const {
 char Ficha::getIcono() const {
     return m_icono;
 }
+
+bool Ficha::getMovida() const {
+    return m_haSidoMovida;
+}
+
+void Ficha::setMovida() {
+    this->m_haSidoMovida = true;
+}

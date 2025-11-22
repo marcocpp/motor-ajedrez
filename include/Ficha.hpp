@@ -12,10 +12,13 @@ public:
     virtual bool movimientoValido(Coordenada origen, Coordenada destino, bool esCaptura) = 0; // TODO Hay q poner los atributos
 
     char getIcono() const;
+    bool getMovida() const;
+    void setMovida();
 
 private:
     Color m_color;
     char m_icono = ' ';
+    bool m_haSidoMovida = false;
 };
 
 #endif // FICHA_HPP

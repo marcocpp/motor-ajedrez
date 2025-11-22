@@ -18,6 +18,7 @@ public:
     void moverFicha(Coordenada origen, Coordenada destino); // Mover ficha una vez comprobado en movimiento
     Ficha* getFichaCasilla(Coordenada casilla) const;
     bool caminoDespejado(Coordenada origen, Coordenada destino);
+    bool enroque(Coordenada origen, Coordenada destino, Ficha* ficha_org);
 
 private:
     Casilla m_casillas[TAM][TAM];

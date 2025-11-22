@@ -9,5 +9,10 @@ bool Rey::movimientoValido(Coordenada origen, Coordenada destino, bool esCaptura
     if (delta_fila <= 1 && delta_col <= 1) {
         return true;
     }
+
+    if (!this->getMovida() && delta_col == 2 && delta_fila == 0) {
+        return true; // Posible enroque
+    }
+
     return false;
 }

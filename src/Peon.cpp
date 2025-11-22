@@ -9,83 +9,31 @@ Peon::Peon(Color color, char icono) : Ficha(color, icono) {}
 // Si hay una ficha justo enfrente, el peon no se puede mover hacia delante
 // No se puede mover hacia atrás
 bool Peon::movimientoValido(Coordenada origen, Coordenada destino, bool esCaptura) {
-    //  Movimiento para peon BLANCO
-    if (this->getColor() == Color::BLANCO) {
-        // Si no se ha movido aun y su destino-origen es 1 o 2, es decir se mueve 1 o 2 hacia delante, es valido
-        if (origen.fila == 1 && ((destino.fila - origen.fila) == 1 || (destino.fila - origen.fila) == 2)) {
-            // Si no se ha movido de columna
-            if (origen.col == destino.col) {
-                // Si delante hay otra ficha, no puede seguir hacia delante
-                if (esCaptura) {
-                    return false;
-                }
-                return true;
-            }
-            else {
-                // Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
-                if (esCaptura && abs(destino.col - origen.col) == 1) {
-                    return true;
-                }
-                return false;
-            }
+    int direccion = (this->getColor() == Color::BLANCO) ? 1 : -1; // Si es color blanco, avanza en fila +1, si es negro, avanza en fila -1
+    int avanceFila = destino.fila - origen.fila;
+    int avanceFilaAbs = abs(avanceFila);
+    int avanceCol = destino.col - origen.col;
+    int avanceColAbs = abs(avanceCol);
 
+    // Movimiento vertical y no captura
+    if (avanceCol == 0 && !esCaptura) {
+        // Si es la primera vez que se mueve: avanza 1 o 2
+        if (!this->getMovida() && avanceFila == 2 * direccion) {
+            return true;
         }
-        else if ((origen.fila == 1 || origen.fila != 1) && (destino.fila - origen.fila) == 1) { // Ya se ha movido, solo se puede mover una hacia delante u oblicuo
-            if (origen.col == destino.col) {
-                // Si delante hay otra ficha, no puede seguir hacia delante
-                if (esCaptura) {
-                    return false;
-                }
-                return true;
-            }
-            else {
-                // Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
-                if (esCaptura && abs(destino.col - origen.col) == 1) {
-                    return true;
-                }
-                return false;
-            }
-        }
-        else {
-            // Se ha movido mas de 1 posicion, o mas de 2 en el caso de q no se haya movido, o bien se ha movido en oblicuo y no podia
-            return false;
+        // Avanza 1, da igual si es la primera vez o no
+        if (avanceFila == direccion) {
+            return true;
         }
     }
-    else { // Movimiento para peon NEGRO
-        if (origen.fila == 6 && ((origen.fila - destino.fila) == 1 || (origen.fila - destino.fila) == 2)) {
-            if (origen.col == destino.col) {
-                if (esCaptura) {
-                    return false;
-                }
-                return true;
-            }
-            else {
-                // Se ha movido en oblicuo, asi q comprobar si hay una ficha q puede comer
-                if (esCaptura && abs(destino.col - origen.col) == 1) {
-                    return true;
-                }
-                return false;
-            }
+    else if (avanceFilaAbs == 1 && avanceColAbs == 1 && esCaptura) { // Si es diagonal y es captura
+        if (avanceFila == direccion) { // Comprueba q avance en la direccion q le corresponde, es decir, hacia adelante dependiendo del color
+            return true;
         }
-        else if ((origen.fila == 6 || origen.fila != 6) && (origen.fila - destino.fila) == 1) {
-            if (origen.col == destino.col) {
-                if (esCaptura) {
-                    return false;
-                }
-                return true;
-            }
-            else {
-                if (esCaptura && abs(destino.col - origen.col) == 1) {
-                    return true;
-                }
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
+        return false; // Esta intentando capturar hacia atras
     }
+    return false; // Cual quiera otro movimiento es invalido, por ejemplo, avanza en vertical y es captura
 
     // Falta implementar la captura al paso
-
+    // Promocion de peon cuando la llega al final del tablero
 }

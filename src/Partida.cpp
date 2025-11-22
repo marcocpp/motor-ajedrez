@@ -44,12 +44,19 @@ bool Partida::validarMovimiento(Coordenada origen, Coordenada destino)
     // Validar si es jaque (No puedes hacer ningún movimiento que deje a tu propio rey en jaque)
 
     // Validar enroque:
-    // 1- ni el rey ni la torre involucrada deben haberse movido antes, 
-    // 2- las casillas entre ellos deben estar desocupadas, 
-    // 3-el rey no puede estar en jaque 
+    // 1- ni el rey ni la torre involucrada deben haberse movido antes: OK 
+    // 2- las casillas entre ellos deben estar desocupadas: OK (comprobado antes)
+    // 3- el rey no puede estar en jaque 
     // 4- no puede pasar ni terminar en una casilla atacada por el rival. 
 
+    // Comprobar enroque
+    if (!ficha_org->getMovida() && ficha_org->getIcono() == 'K' && abs(origen.col - destino.col) == 2 && abs(origen.fila - destino.fila) == 0) {
+        return m_tablero.enroque(origen, destino, ficha_org); // No se ha movido la torre
+    }
+
+
     return true; // Movimiento de ficha valido
+
 }
 
 void Partida::iniciarPartida() {
