@@ -42,6 +42,13 @@ bool Partida::validarMovimiento(Coordenada origen, Coordenada destino)
     }
 
     // Validar si es jaque (No puedes hacer ningún movimiento que deje a tu propio rey en jaque)
+
+    // Validar enroque:
+    // 1- ni el rey ni la torre involucrada deben haberse movido antes, 
+    // 2- las casillas entre ellos deben estar desocupadas, 
+    // 3-el rey no puede estar en jaque 
+    // 4- no puede pasar ni terminar en una casilla atacada por el rival. 
+
     return true; // Movimiento de ficha valido
 }
 
