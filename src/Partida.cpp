@@ -5,39 +5,37 @@ Partida::Partida(std::string nombre_j1, std::string nombre_j2) : m_tablero(), m_
     m_jugadorActual = &m_jugador1; // Empieza el jugador 1
 }
 
-bool Partida::validarMovimiento(Coordenada origen, Coordenada destino)
+std::pair<bool, bool> Partida::validarMovimiento(Coordenada origen, Coordenada destino, Ficha* ficha_org, Ficha* ficha_dest)
 {
     bool esCaptura = false;
-    Ficha* ficha_org = m_tablero.getFichaCasilla(origen);
-    Ficha* ficha_dest = m_tablero.getFichaCasilla(destino);
 
     // Validar si en origen hay una ficha
     if (ficha_org == nullptr) {
-        return false; // No hay ficha en esa casilla
+        return { false,false }; // No hay ficha en esa casilla
     }
 
     // Validar turno (que no intente mover una ficha q no es tuya. que el blanco no mueva una negra)
     if (ficha_org->getColor() != m_jugadorActual->getColor()) {
-        return false; // Esta intentando mover una ficha q no es suya
+        return { false,false }; // Esta intentando mover una ficha q no es suya
     }
 
     // Validar autocaptura (que el usuario no capture una ficha propia)
     if (ficha_dest != nullptr) {
         esCaptura = true; // Se va a comer una ficha
         if (ficha_dest->getColor() == ficha_org->getColor()) {
-            return false; // Autocaptura!
+            return { false,false }; // Autocaptura!
         }
     }
 
     // Si hay una ficha, identificar cual es para ver q movimiento puede hacer y verificar si esa ficha puede hacer ese mov
     if (!ficha_org->movimientoValido(origen, destino, esCaptura)) {
-        return false; // Movimiento de ficha invalido
+        return { false,false }; // Movimiento de ficha invalido
     }
 
     // Validar si no hay ninguna ficha propia en la trayectoria q realiza q le impida avanzar
     if (ficha_org->getIcono() != 'N') { // El caballo si puede saltar fichas
         if (!m_tablero.caminoDespejado(origen, destino)) {
-            return false; // Hay una ficha en la trayectoria q impide el movimiento
+            return { false,false }; // Hay una ficha en la trayectoria q impide el movimiento
         }
     }
 
@@ -51,11 +49,14 @@ bool Partida::validarMovimiento(Coordenada origen, Coordenada destino)
 
     // Comprobar enroque
     if (!ficha_org->getMovida() && ficha_org->getIcono() == 'K' && abs(origen.col - destino.col) == 2 && abs(origen.fila - destino.fila) == 0) {
-        return m_tablero.enroque(origen, destino, ficha_org); // No se ha movido la torre
+        if (m_tablero.enroque(origen, destino, ficha_org)) {
+            // No se ha movido la torre
+            return { true, true };
+        }
+        return { false, false };
     }
 
-
-    return true; // Movimiento de ficha valido
+    return { true,false }; // Movimiento de ficha valido
 
 }
 
@@ -76,13 +77,26 @@ void Partida::iniciarPartida() {
         // Pedimos el destino
         Coordenada destino = m_jugadorActual->solicitarCoordenada("introduce la casilla de DESTINO (ej: e4): ");
 
+        Ficha* ficha_org = m_tablero.getFichaCasilla(origen);
+        Ficha* ficha_dest = m_tablero.getFichaCasilla(destino);
+
+        std::pair<bool, bool> resultado = validarMovimiento(origen, destino, ficha_org, ficha_dest);
+
+        bool esValido = resultado.first;
+        bool esEnroque = resultado.second;
+
         // Validamos el movimiento
-        if (validarMovimiento(origen, destino))
+        if (esValido)
         {
-            m_tablero.moverFicha(origen, destino);
+            if (esEnroque) {
+                m_tablero.ejecutarEnroque(origen, destino, ficha_org);
+            }
+            else {
+                m_tablero.moverFicha(origen, destino);
+            }
 
             // Cambia de jugador
-            m_jugadorActual = (m_jugadorActual == &m_jugador1) ? &m_jugador2 : &m_jugador1;
+            //m_jugadorActual = (m_jugadorActual == &m_jugador1) ? &m_jugador2 : &m_jugador1;
         }
         else
         {
@@ -96,4 +110,3 @@ void Partida::iniciarPartida() {
 
     }
 }
-

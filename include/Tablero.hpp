@@ -19,6 +19,7 @@ public:
     Ficha* getFichaCasilla(Coordenada casilla) const;
     bool caminoDespejado(Coordenada origen, Coordenada destino);
     bool enroque(Coordenada origen, Coordenada destino, Ficha* ficha_org);
+    void ejecutarEnroque(Coordenada origen, Coordenada destino, Ficha* ficha_org);
 
 private:
     Casilla m_casillas[TAM][TAM];

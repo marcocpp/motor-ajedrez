@@ -12,7 +12,7 @@ public:
 
 
     void iniciarPartida();
-    bool validarMovimiento(Coordenada origen, Coordenada destino);
+    std::pair<bool, bool> validarMovimiento(Coordenada origen, Coordenada destino, Ficha* ficha_org, Ficha* ficha_dest);
 
 
 private:

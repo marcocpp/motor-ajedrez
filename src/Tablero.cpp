@@ -180,6 +180,23 @@ bool Tablero::enroque(Coordenada origen, Coordenada destino, Ficha* ficha_org) {
     int fila_torre = (ficha_org->getColor() == Color::BLANCO) ? 0 : 7;
     int col_torre_izq = 0;
     int col_torre_der = 7;
+
+    // La torre de la izquierda no se ha movido
+    if (origen.col - destino.col > 1) {
+        return true;
+    }
+    // La torre de la derecha no se ha movido
+    else if (origen.col - destino.col < 1) {
+        return true;
+    }
+    return false;
+}
+
+
+void Tablero::ejecutarEnroque(Coordenada origen, Coordenada destino, Ficha* ficha_org) {
+    int fila_torre = (ficha_org->getColor() == Color::BLANCO) ? 0 : 7;
+    int col_torre_izq = 0;
+    int col_torre_der = 7;
     Coordenada torre_orig;
     Coordenada torre_dest;
 
@@ -190,15 +207,17 @@ bool Tablero::enroque(Coordenada origen, Coordenada destino, Ficha* ficha_org) {
     if (!m_casillas[fila_torre][col_torre_izq].getFicha()->getMovida() && origen.col - destino.col > 1) {
         torre_orig.col = col_torre_izq;
         torre_dest.col = col_torre_izq + 3;
+        // Muevo la torre
         moverFicha(torre_orig, torre_dest);
-        return true;
     }
     // La torre de la derecha no se ha movido
     else if (!m_casillas[fila_torre][col_torre_der].getFicha()->getMovida() && origen.col - destino.col < 1) {
         torre_orig.col = col_torre_der;
         torre_dest.col = col_torre_der - 2;
+        // Muevo la torre
         moverFicha(torre_orig, torre_dest);
-        return true;
     }
-    return false;
+
+    // Muevo el rey
+    moverFicha(origen, destino);
 }
